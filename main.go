@@ -21,9 +21,14 @@ import (
 	"go.foxforensics.dev/entropy/entropy"
 )
 
+var Usage = `© 2026 Fox Forensics. Licensed under MIT License.
+Usage: entropy PATH
+
+Report bugs at: foxforensics.dev/issues`
+
 func main() {
 	if len(os.Args) == 1 || os.Args[1] == "--help" {
-		_, _ = fmt.Fprintln(os.Stderr, "usage: entropy path")
+		_, _ = fmt.Fprintln(os.Stderr, Usage)
 		os.Exit(2)
 	}
 
