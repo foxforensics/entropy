@@ -2,7 +2,7 @@
 Calculate file entropy.
 
 ```console
-go install go.foxforensics.dev/entropy@latest
+go install go.foxforensics.eu/entropy@latest
 ```
 
 ## Usage

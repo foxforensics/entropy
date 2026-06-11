@@ -16,15 +16,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"go.foxforensics.dev/go-mmap"
-
-	"go.foxforensics.dev/entropy/entropy"
+	"go.foxforensics.eu/entropy/entropy"
+	"go.foxforensics.eu/go-mmap"
 )
 
 var Usage = `© 2026 Fox Forensics. Licensed under MIT License.
 Usage: entropy PATH
 
-Report bugs at: foxforensics.dev/issues`
+Report bugs at: foxforensics.eu/issues`
 
 func main() {
 	if len(os.Args) == 1 || os.Args[1] == "--help" {
