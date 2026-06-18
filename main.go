@@ -31,10 +31,9 @@ func main() {
 		os.Exit(2)
 	}
 
-	err := filepath.WalkDir(os.Args[1], func(path string, d fs.DirEntry, err error) error {
+	if err := filepath.WalkDir(os.Args[1], func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			_, _ = fmt.Fprintln(os.Stderr, err)
-			return nil
+			return err
 		}
 
 		if d.IsDir() {
@@ -44,36 +43,34 @@ func main() {
 		path, err = filepath.Abs(path)
 
 		if err != nil {
-			_, _ = fmt.Fprintln(os.Stderr, err)
-			return nil
+			return err
 		}
 
 		f, err := os.Open(path)
 
 		if err != nil {
-			_, _ = fmt.Fprintln(os.Stderr, err)
-			return nil
+			return err
 		}
 
-		defer func() { _ = f.Close() }()
+		defer func() {
+			_ = f.Close()
+		}()
 
 		m, err := mmap.Map(f, mmap.RDONLY, 0)
 
 		if err != nil {
-			_, _ = fmt.Fprintln(os.Stderr, err)
-			return nil
+			return err
 		}
 
-		defer func() { _ = m.Unmap() }()
+		defer func() {
+			_ = m.Unmap()
+		}()
 
-		e := entropy.Calculate(m)
+		_, _ = fmt.Printf("%0.10f  %s\n", entropy.Calculate(m), path)
 
-		_, _ = fmt.Printf("%0.10f  %s\n", e, path)
 		return nil
-	})
-
-	if err != nil {
-		_, _ = fmt.Fprintln(os.Stderr, err)
+	}); err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 }
