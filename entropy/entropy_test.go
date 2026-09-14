@@ -17,8 +17,14 @@ func TestCalculate(t *testing.T) {
 			t.Fatalf("Calculate: %v", err)
 		}
 
-		if Calculate(blk) != 7.826049715293044 {
-			t.Fatal("entropy wrong")
+		avg, ent := Calculate(blk)
+
+		if avg != 125 {
+			t.Fatalf("average wrong: %d", avg)
+		}
+
+		if ent != 7.826049715293044 {
+			t.Fatalf("entropy wrong: %f", ent)
 		}
 	})
 }
@@ -34,7 +40,7 @@ func BenchmarkCalculate(b *testing.B) {
 		b.ResetTimer()
 
 		for n := 0; n < b.N; n++ {
-			_ = Calculate(blk)
+			_, _ = Calculate(blk)
 		}
 	})
 }

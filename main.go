@@ -1,4 +1,4 @@
-// Calculate file entropy.
+// Calculate file entropy and average.
 //
 // Usage:
 //
@@ -66,7 +66,9 @@ func main() {
 			_ = m.Unmap()
 		}()
 
-		_, _ = fmt.Printf("%0.10f  %s\n", entropy.Calculate(m), path)
+		avg, ent := entropy.Calculate(m)
+
+		_, _ = fmt.Printf("%0.10f %3d  %s\n", ent, avg, path)
 
 		return nil
 	}); err != nil {
